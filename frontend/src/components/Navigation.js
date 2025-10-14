@@ -64,6 +64,15 @@ export default function Navigation() {
     { to: '/chat', label: 'AI Chat', icon: Bot },
   ];
 
+  const mediaLinks = [
+    { to: '/media/nugl-tv', label: 'NUGL TV', icon: Video },
+    { to: '/media/business', label: 'Business', icon: Briefcase },
+    { to: '/media/culture', label: 'Culture', icon: Palette },
+    { to: '/media/grow-products', label: 'Grow Products', icon: Flower2 },
+    { to: '/media/wellness', label: 'Wellness', icon: Heart },
+    { to: '/media/events', label: 'Events', icon: Calendar },
+  ];
+
   return (
     <>
       <nav className="sticky top-0 z-50 backdrop-blur-xl bg-slate-900/80 border-b border-teal-500/20">
