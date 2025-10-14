@@ -20,6 +20,9 @@ export default function Navigation() {
   const { user, token, login, logout, API } = useContext(AuthContext);
   const [showAuth, setShowAuth] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [walletConnected, setWalletConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState('');
+  const [userCredits, setUserCredits] = useState(0);
   const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({ username: '', password: '' });
