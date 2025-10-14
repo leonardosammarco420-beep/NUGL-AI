@@ -333,7 +333,7 @@ export default function InvestorRelationsPage() {
                       <td className="pt-4 text-right text-green-400 font-semibold">+34.2%</td>
                       <td className="pt-4 text-right">
                         <span className="text-white font-semibold">
-                          {quarterlyData.slice(-4).reduce((sum, q) => sum + q.transactions, 0).toLocaleString()}
+                          {ttmTransactions.toLocaleString()}
                         </span>
                       </td>
                     </tr>
