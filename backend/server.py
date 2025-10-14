@@ -403,6 +403,37 @@ async def get_nft(nft_id: str):
         nft["created_at"] = datetime.fromisoformat(nft["created_at"])
     return nft
 
+@api_router.post("/nfts/{nft_id}/purchase")
+async def purchase_nft(nft_id: str, purchase_data: dict):
+    """Purchase an NFT with crypto wallet"""
+    nft = await db.nfts.find_one({"id": nft_id})
+    if not nft:
+        raise HTTPException(status_code=404, detail="NFT not found")
+    
+    if nft.get("owner"):
+        raise HTTPException(status_code=400, detail="NFT already sold")
+    
+    # Update NFT ownership
+    await db.nfts.update_one(
+        {"id": nft_id},
+        {"$set": {"owner": purchase_data.get("buyer")}}
+    )
+    
+    # Record transaction
+    transaction = {
+        "id": str(uuid.uuid4()),
+        "nft_id": nft_id,
+        "nft_name": nft.get("name"),
+        "buyer": purchase_data.get("buyer"),
+        "seller": nft.get("creator"),
+        "price": purchase_data.get("price"),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "transaction_hash": f"0x{uuid.uuid4().hex}"  # Simulated tx hash
+    }
+    await db.nft_transactions.insert_one(transaction)
+    
+    return {"success": True, "message": "NFT purchased successfully", "transaction": transaction}
+
 # AI Chatbot Route
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat(message: ChatMessage):
