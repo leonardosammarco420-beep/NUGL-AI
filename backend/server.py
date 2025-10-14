@@ -372,7 +372,7 @@ async def create_seed(seed: SeedCreate, user_id: str = Depends(get_current_user)
     return seed_obj
 
 # NFT Routes
-@api_router.get("/nfts", response_model=List[NFT])
+@api_router.get("/nfts")
 async def get_nfts(
     blockchain: Optional[str] = None, 
     for_sale: Optional[bool] = None,
@@ -392,9 +392,11 @@ async def get_nfts(
     if category == 'trending':
         nfts = sorted(nfts, key=lambda x: x.get('views', 0) + x.get('likes', 0) * 2, reverse=True)
     
+    # Convert datetime to string for JSON serialization
     for nft in nfts:
-        if isinstance(nft.get("created_at"), str):
-            nft["created_at"] = datetime.fromisoformat(nft["created_at"])
+        if isinstance(nft.get("created_at"), datetime):
+            nft["created_at"] = nft["created_at"].isoformat()
+    
     return nfts
 
 @api_router.post("/nfts", response_model=NFT)
