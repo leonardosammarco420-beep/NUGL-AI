@@ -44,7 +44,7 @@ LEGACY_CONTENT = {
                 'excerpt': 'Major acquisition announcement for NUGL Inc.'
             },
             {
-                'title': 'TYSON 2.0 and Carma HoldCo Land in Jamaica, Bringing Mike Tyson's Knockout Cannabis Line to the Island',
+                'title': 'TYSON 2.0 and Carma HoldCo Land in Jamaica, Bringing Mike Tyson\'s Knockout Cannabis Line to the Island',
                 'url': 'https://nugl.com/tyson-2-0-and-carma-holdco-land-in-jamaica-bringing-mike-tysons-knockout-cannabis-line-to-the-island/',
                 'excerpt': 'Mike Tyson\'s cannabis brand expands to Jamaica'
             }
