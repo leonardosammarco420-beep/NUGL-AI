@@ -80,6 +80,7 @@ function App() {
             <Route path="/subscription" element={<SubscriptionPage />} />
             <Route path="/earnings" element={<EarningsPage />} />
             <Route path="/investors" element={<InvestorRelationsPage />} />
+            <Route path="/media/:category" element={<MediaPage />} />
           </Routes>
         </div>
       </BrowserRouter>
