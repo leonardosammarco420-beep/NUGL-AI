@@ -127,9 +127,19 @@ export default function InvestorRelationsPage() {
               </h1>
               <p className="text-gray-400">NUGL Inc. - The Digital Greenhouse</p>
             </div>
-            <div className="text-right">
-              <div className="text-sm text-gray-400 mb-1">OTC Markets</div>
-              <div className="text-3xl font-bold text-white">NUGL</div>
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={() => window.location.href = '/press-room'}
+                variant="outline"
+                className="border-teal-500/30 text-teal-400 hover:bg-teal-500/10"
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Press Room
+              </Button>
+              <div className="text-right">
+                <div className="text-sm text-gray-400 mb-1">OTC Markets</div>
+                <div className="text-3xl font-bold text-white">NUGL</div>
+              </div>
             </div>
           </div>
         </div>
