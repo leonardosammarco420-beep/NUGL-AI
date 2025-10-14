@@ -53,12 +53,15 @@ export default function Navigation() {
     { to: '/', label: 'Home' },
     { to: '/news', label: 'News' },
     { to: '/crypto', label: 'Crypto', highlight: true },
-    { to: '/strains', label: 'Strains' },
-    { to: '/seeds', label: 'Seeds' },
     { to: '/nft-marketplace', label: 'NFTs' },
     { to: '/shop', label: 'Shop' },
     { to: '/investors', label: 'Investors' },
-    { to: '/chat', label: 'AI Chat' },
+  ];
+
+  const cannabisLinks = [
+    { to: '/strains', label: 'Strains', icon: Leaf },
+    { to: '/seeds', label: 'Seeds', icon: Sprout },
+    { to: '/chat', label: 'AI Chat', icon: Bot },
   ];
 
   return (
