@@ -56,12 +56,57 @@ export default function PressRoomPage() {
     release.media_source.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Extract date from URL or use title
+  const extractDateFromArticle = (release) => {
+    const urlDateMatch = release.link.match(/\/(\d{4})\/(\d{2})\/(\d{2})\//);
+    if (urlDateMatch) {
+      return new Date(urlDateMatch[1], urlDateMatch[2] - 1, urlDateMatch[3]);
+    }
+    
+    const titleDateMatch = release.title.match(/(\d{4})/);
+    if (titleDateMatch) {
+      return new Date(titleDateMatch[1], 0, 1);
+    }
+    
+    return new Date(release.published_at);
+  };
+
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    } catch {
+      return 'Date N/A';
+    }
+  };
+
+  // Logo/favicon mapping for publications
+  const getPublicationLogo = (mediaSource) => {
+    const logos = {
+      'Forbes': 'https://logo.clearbit.com/forbes.com',
+      'Rolling Stone': 'https://logo.clearbit.com/rollingstone.com',
+      'New York Times': 'https://logo.clearbit.com/nytimes.com',
+      'Gleaner': 'https://logo.clearbit.com/jamaica-gleaner.com',
+      'Jamaica Gleaner': 'https://logo.clearbit.com/jamaica-gleaner.com',
+      'Jamaica Observer': 'https://logo.clearbit.com/jamaicaobserver.com',
+      'Observer': 'https://logo.clearbit.com/jamaicaobserver.com',
+      'Benzinga': 'https://logo.clearbit.com/benzinga.com',
+      'Leafly': 'https://logo.clearbit.com/leafly.com',
+      'Loop Jamaica': 'https://logo.clearbit.com/loopjamaica.com',
+      'Vice': 'https://logo.clearbit.com/vice.com',
+      'ECONOMIST': 'https://logo.clearbit.com/economist.com',
+      'Financial Post': 'https://logo.clearbit.com/financialpost.com',
+      'GlobeNewswire': 'https://logo.clearbit.com/globenewswire.com',
+      'The Guardian': 'https://logo.clearbit.com/theguardian.com',
+      'CNBC': 'https://logo.clearbit.com/cnbc.com',
+      'Buzz Caribbean': 'https://logo.clearbit.com/buzz-caribbean.com'
+    };
+    
+    return logos[mediaSource] || 'https://via.placeholder.com/32x32?text=' + (mediaSource ? mediaSource.charAt(0) : 'N');
   };
 
   return (
