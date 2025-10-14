@@ -373,14 +373,25 @@ async def create_seed(seed: SeedCreate, user_id: str = Depends(get_current_user)
 
 # NFT Routes
 @api_router.get("/nfts", response_model=List[NFT])
-async def get_nfts(blockchain: Optional[str] = None, for_sale: Optional[bool] = None):
+async def get_nfts(
+    blockchain: Optional[str] = None, 
+    for_sale: Optional[bool] = None,
+    category: Optional[str] = None
+):
     query = {}
     if blockchain:
         query["blockchain"] = blockchain
     if for_sale is not None:
         query["is_for_sale"] = for_sale
+    if category and category != 'all' and category != 'trending':
+        query["category"] = category
     
     nfts = await db.nfts.find(query, {"_id": 0}).to_list(100)
+    
+    # Sort by trending if requested
+    if category == 'trending':
+        nfts = sorted(nfts, key=lambda x: x.get('views', 0) + x.get('likes', 0) * 2, reverse=True)
+    
     for nft in nfts:
         if isinstance(nft.get("created_at"), str):
             nft["created_at"] = datetime.fromisoformat(nft["created_at"])
