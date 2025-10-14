@@ -384,7 +384,7 @@ export default function NewsPage() {
                   <div
                     key={article.id}
                     data-testid={`feed-item-${article.id}`}
-                    onClick={() => window.open(article.source_url, '_blank')}
+                    onClick={() => handleArticleClick(article)}
                     className="flex items-center gap-4 p-4 bg-slate-800/50 border border-teal-500/20 rounded-lg hover:border-teal-500/50 transition-all cursor-pointer"
                   >
                     <div className="flex-shrink-0">
