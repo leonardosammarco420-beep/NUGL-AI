@@ -20,6 +20,53 @@ export default function NewsPage() {
   const [timeFilter, setTimeFilter] = useState('24h');
   const [liveTickerData, setLiveTickerData] = useState([]);
 
+  // Helper function to extract source name from URL
+  const getSourceName = (url) => {
+    if (!url) return 'Unknown';
+    try {
+      const domain = new URL(url).hostname.replace('www.', '');
+      const sourceMap = {
+        'jamaicaobserver.com': 'Jamaica Observer',
+        'jamaica-gleaner.com': 'Jamaica Gleaner',
+        'rjrnewsonline.com': 'RJR News',
+        'iriefm.net': 'IrieFM',
+        'marijuanamoment.net': 'Marijuana Moment',
+        'leafly.com': 'Leafly',
+        'cointelegraph.com': 'CoinTelegraph',
+        'decrypt.co': 'Decrypt',
+        'coindesk.com': 'CoinDesk',
+        'venturebeat.com': 'VentureBeat',
+        'bbc.co.uk': 'BBC',
+        'aljazeera.com': 'Al Jazeera',
+        'nytimes.com': 'NY Times',
+        'marketwatch.com': 'MarketWatch'
+      };
+      return sourceMap[domain] || domain.split('.')[0].charAt(0).toUpperCase() + domain.split('.')[0].slice(1);
+    } catch {
+      return 'Unknown';
+    }
+  };
+
+  // Helper function to format timestamp
+  const formatTimestamp = (timestamp) => {
+    if (!timestamp) return '';
+    try {
+      const date = new Date(timestamp);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+      
+      if (diffMins < 60) return `${diffMins}m ago`;
+      if (diffHours < 24) return `${diffHours}h ago`;
+      if (diffDays < 7) return `${diffDays}d ago`;
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    } catch {
+      return '';
+    }
+  };
+
   useEffect(() => {
     fetchNews();
     fetchTickerData();
