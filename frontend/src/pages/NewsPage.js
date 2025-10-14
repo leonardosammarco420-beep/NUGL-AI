@@ -348,11 +348,7 @@ export default function NewsPage() {
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                            article.category === 'cannabis' ? 'bg-green-500/20 text-green-400' :
-                            article.category === 'crypto' ? 'bg-orange-500/20 text-orange-400' :
-                            'bg-blue-500/20 text-blue-400'
-                          }`}>
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(article.category)}`}>
                             {article.category}
                           </span>
                           {article.trending_score > 0.5 && (
