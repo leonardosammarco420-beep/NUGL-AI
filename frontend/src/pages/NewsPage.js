@@ -337,7 +337,12 @@ export default function NewsPage() {
                       <h3 className="text-white font-semibold mb-2 line-clamp-3">
                         {article.title}
                       </h3>
-                      <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center justify-between text-xs mt-auto">
+                        <div className="flex items-center gap-2 text-gray-400">
+                          <span className="font-medium">{getSourceName(article.source_url)}</span>
+                          <span>•</span>
+                          <span>{formatTimestamp(article.published_at)}</span>
+                        </div>
                         <span className={`font-semibold ${getImpactColor(article.impact)}`}>
                           {article.impact.toUpperCase()}
                         </span>
