@@ -188,21 +188,74 @@ export default function AIHubPage() {
           </div>
         </div>
 
-        {/* Embedded View or Instructions */}
+        {/* Chat Interface or External Link */}
         <div className="bg-slate-800/50 border border-purple-500/20 rounded-xl overflow-hidden">
-          {currentModel.isInternal ? (
-            <div className="p-8 text-center">
-              <currentModel.icon className={`w-16 h-16 ${currentModel.color} mx-auto mb-4`} />
-              <h3 className="text-2xl font-semibold text-white mb-2">
-                {currentModel.name}
-              </h3>
-              <p className="text-gray-400 mb-6">{currentModel.description}</p>
-              <Button
-                onClick={() => window.location.href = currentModel.url}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-              >
-                Launch {currentModel.name}
-              </Button>
+          {currentModel.usable ? (
+            <div className="p-6">
+              {/* Chat Messages */}
+              <div className="h-[400px] overflow-y-auto mb-4 space-y-4 bg-slate-900/50 rounded-lg p-4">
+                {messages.length === 0 ? (
+                  <div className="h-full flex items-center justify-center text-center">
+                    <div>
+                      <currentModel.icon className={`w-12 h-12 ${currentModel.color} mx-auto mb-3`} />
+                      <h3 className="text-lg font-semibold text-white mb-2">
+                        {currentModel.name}
+                      </h3>
+                      <p className="text-gray-400 text-sm">
+                        Ask me anything about cannabis, strains, growing tips, or legality!
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  messages.map((msg, idx) => (
+                    <div
+                      key={idx}
+                      className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-[80%] rounded-lg p-3 ${
+                          msg.role === 'user'
+                            ? 'bg-teal-600 text-white'
+                            : 'bg-slate-700 text-gray-200'
+                        }`}
+                      >
+                        {msg.content}
+                      </div>
+                    </div>
+                  ))
+                )}
+                {loading && (
+                  <div className="flex justify-start">
+                    <div className="bg-slate-700 rounded-lg p-3">
+                      <Loader2 className="w-5 h-5 animate-spin text-teal-400" />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Input Box */}
+              <div className="flex gap-2">
+                <Textarea
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSendMessage();
+                    }
+                  }}
+                  placeholder="Ask about cannabis strains, effects, growing tips..."
+                  className="flex-1 bg-slate-900 border-slate-700 text-white"
+                  rows={2}
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={loading || !prompt.trim()}
+                  className="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600"
+                >
+                  <Send className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           ) : (
             <div className="aspect-video bg-slate-900 relative">
