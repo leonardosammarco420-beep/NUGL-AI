@@ -15,6 +15,7 @@ export default function NewsPage() {
   const [category, setCategory] = useState('all');
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [viewMode, setViewMode] = useState('heatmap'); // heatmap, feed, grid
   const [sentimentFilter, setSentimentFilter] = useState('all');
   const [timeFilter, setTimeFilter] = useState('24h');
