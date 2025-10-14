@@ -216,40 +216,23 @@ export default function Navigation() {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* AI Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button 
-                    className="px-3 py-2 rounded-lg text-sm font-medium text-purple-400 hover:text-purple-300 hover:bg-slate-800/50 transition-colors flex items-center gap-1"
-                    data-testid="nav-ai"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    AI
-                    <ChevronDown className="w-3 h-3" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent 
-                  className="bg-slate-900 border-purple-500/30 min-w-[200px]"
-                  align="end"
-                >
-                  {aiLinks.map((link) => (
-                    <DropdownMenuItem 
-                      key={link.to}
-                      asChild
-                      className="cursor-pointer text-gray-300 hover:text-purple-400 hover:bg-slate-800/50 focus:text-purple-400 focus:bg-slate-800/50"
-                    >
-                      <Link 
-                        to={link.to} 
-                        className="flex items-center gap-2 w-full"
-                        data-testid={`ai-${link.label.toLowerCase().replace(' ', '-')}`}
-                      >
-                        <link.icon className="w-4 h-4" />
-                        {link.label}
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {/* NFTs */}
+              <Link
+                to="/nft-marketplace"
+                data-testid="nav-nfts"
+                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 transition-colors"
+              >
+                NFTs
+              </Link>
+
+              {/* Shop */}
+              <Link
+                to="/shop"
+                data-testid="nav-shop"
+                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 transition-colors"
+              >
+                Shop
+              </Link>
 
               {/* Media Dropdown */}
               <DropdownMenu>
