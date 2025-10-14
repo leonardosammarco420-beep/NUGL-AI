@@ -145,6 +145,34 @@ export default function NewsPage() {
           <p className="text-gray-400">Real-time cannabis, crypto, and AI market intelligence with sentiment analysis</p>
         </div>
 
+        {/* News Sources Info Banner */}
+        <div className="mb-8 bg-gradient-to-r from-teal-500/10 to-emerald-500/10 border border-teal-500/30 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 mt-1">
+              <svg className="w-5 h-5 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-white font-semibold text-sm mb-1">📰 Live News from Trusted Sources</h3>
+              <p className="text-gray-300 text-xs mb-2">
+                <strong>Click any article to read the full story</strong> from our curated RSS feeds:
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs text-gray-400">
+                <div><strong className="text-teal-400">Cannabis:</strong> Marijuana Moment, Leafly, CannabisTech</div>
+                <div><strong className="text-orange-400">Crypto:</strong> CoinTelegraph, Decrypt, CoinDesk</div>
+                <div><strong className="text-blue-400">AI:</strong> VentureBeat, AI News</div>
+                <div><strong className="text-purple-400">Market:</strong> Bloomberg, MarketWatch, Yahoo Finance</div>
+                <div><strong className="text-cyan-400">International:</strong> Al Jazeera, BBC, NY Times</div>
+                <div><strong className="text-yellow-400">Jamaica:</strong> Gleaner, RJR, IrieFM, Observer</div>
+              </div>
+              <p className="text-gray-400 text-xs mt-2">
+                ⚡ <strong>Auto-refreshes hourly</strong> | 💰 Potential for affiliate partnerships with news sources
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Search and Filter Controls */}
         <div className="mb-8 space-y-4">
           <div className="flex flex-col lg:flex-row gap-4">
