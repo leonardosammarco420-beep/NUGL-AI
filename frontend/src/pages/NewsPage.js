@@ -246,6 +246,7 @@ export default function NewsPage() {
                     <div
                       key={article.id}
                       data-testid={`heatmap-tile-${article.id}`}
+                      onClick={() => window.open(article.source_url, '_blank')}
                       className={`${size} rounded-xl p-6 border-2 transition-all duration-300 hover:scale-105 cursor-pointer ${
                         article.sentiment === 'bullish' ? 'bg-green-500/10 border-green-500/30 hover:bg-green-500/20' :
                         article.sentiment === 'bearish' ? 'bg-red-500/10 border-red-500/30 hover:bg-red-500/20' :
