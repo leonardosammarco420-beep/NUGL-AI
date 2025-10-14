@@ -888,6 +888,44 @@ async def calculate_portfolio_value(holdings: List[dict], user_id: str = Depends
     result = await crypto_price_service.calculate_portfolio_value(holdings)
     return result
 
+@api_router.get("/ticker")
+async def get_live_ticker():
+    """Get live ticker data for crypto and cannabis stocks"""
+    try:
+        # Get crypto prices
+        crypto_symbols = ['bitcoin', 'ethereum', 'solana']
+        crypto_prices = await crypto_price_service.get_live_prices(crypto_symbols)
+        
+        ticker_data = []
+        
+        # Add crypto data
+        crypto_map = {'bitcoin': 'BTC', 'ethereum': 'ETH', 'solana': 'SOL'}
+        for coin_id, symbol in crypto_map.items():
+            if coin_id in crypto_prices.get('crypto', {}):
+                coin_data = crypto_prices['crypto'][coin_id]
+                ticker_data.append({
+                    'symbol': symbol,
+                    'price': coin_data.get('price', 0),
+                    'change': coin_data.get('change_24h', 0),
+                    'type': 'crypto'
+                })
+        
+        # Add cannabis stock data (NUGL, AUXLY, TLRY, CGC)
+        # Note: These are simulated for now - integrate with real stock API for production
+        cannabis_stocks = [
+            {'symbol': 'NUGL', 'price': 0.12, 'change': 8.5, 'type': 'stock'},
+            {'symbol': 'AUXLY', 'price': 0.045, 'change': -3.2, 'type': 'stock'},
+            {'symbol': 'TLRY', 'price': 3.45, 'change': -2.1, 'type': 'stock'},
+            {'symbol': 'CGC', 'price': 7.23, 'change': 3.8, 'type': 'stock'},
+        ]
+        
+        ticker_data.extend(cannabis_stocks)
+        
+        return {'ticker': ticker_data}
+    except Exception as e:
+        logger.error(f"Error fetching ticker data: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to fetch ticker data")
+
 # ============================================
 
 # Include the router in the main app
