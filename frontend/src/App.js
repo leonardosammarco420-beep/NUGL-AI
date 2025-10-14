@@ -18,6 +18,7 @@ import EarningsPage from './pages/EarningsPage';
 import InvestorRelationsPage from './pages/InvestorRelationsPage';
 import CryptoPage from './pages/CryptoPage';
 import MediaPage from './pages/MediaPage';
+import AffiliateDashboardPage from './pages/AffiliateDashboardPage';
 import './App.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
