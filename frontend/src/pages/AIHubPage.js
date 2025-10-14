@@ -13,12 +13,22 @@ export default function AIHubPage() {
 
   const aiModels = [
     {
+      id: 'cannabis',
+      name: 'Cannabis Expert',
+      icon: Leaf,
+      color: 'text-teal-400',
+      url: '/chat',
+      isInternal: true,
+      usable: true,
+      description: '🎯 FREE on NUGL - GPT-5 powered cannabis expert'
+    },
+    {
       id: 'gpt',
       name: 'ChatGPT',
       icon: MessageSquare,
       color: 'text-green-400',
-      url: 'https://chat.openai.com',
-      embed: 'https://chat.openai.com',
+      url: 'https://chat.openai.com/?ref=nugl',
+      affiliateId: 'chatgpt-affiliate',
       description: 'OpenAI GPT-4 - Best for general tasks, coding, writing'
     },
     {
@@ -26,8 +36,8 @@ export default function AIHubPage() {
       name: 'Claude',
       icon: Brain,
       color: 'text-orange-400',
-      url: 'https://claude.ai',
-      embed: 'https://claude.ai',
+      url: 'https://claude.ai/?ref=nugl',
+      affiliateId: 'claude-affiliate',
       description: 'Anthropic Claude - Great for analysis, long documents'
     },
     {
@@ -35,8 +45,8 @@ export default function AIHubPage() {
       name: 'Perplexity',
       icon: Sparkles,
       color: 'text-blue-400',
-      url: 'https://www.perplexity.ai',
-      embed: 'https://www.perplexity.ai',
+      url: 'https://www.perplexity.ai/?ref=nugl',
+      affiliateId: 'perplexity-affiliate',
       description: 'Real-time web search with AI answers'
     },
     {
@@ -44,8 +54,8 @@ export default function AIHubPage() {
       name: 'DeepSeek',
       icon: Zap,
       color: 'text-purple-400',
-      url: 'https://chat.deepseek.com',
-      embed: 'https://chat.deepseek.com',
+      url: 'https://chat.deepseek.com/?ref=nugl',
+      affiliateId: 'deepseek-affiliate',
       description: 'DeepSeek AI - Advanced reasoning and coding'
     },
     {
@@ -53,18 +63,9 @@ export default function AIHubPage() {
       name: 'HuggingFace Spaces',
       icon: Bot,
       color: 'text-yellow-400',
-      url: 'https://huggingface.co/spaces',
-      embed: 'https://huggingface.co/spaces',
+      url: 'https://huggingface.co/spaces?ref=nugl',
+      affiliateId: 'huggingface-affiliate',
       description: 'Browse 1000+ AI apps and models'
-    },
-    {
-      id: 'cannabis',
-      name: 'Cannabis Expert',
-      icon: Leaf,
-      color: 'text-teal-400',
-      url: '/chat',
-      isInternal: true,
-      description: 'NUGL AI Cannabis Expert (GPT-5 powered)'
     }
   ];
 
