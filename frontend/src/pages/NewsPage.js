@@ -175,11 +175,14 @@ export default function NewsPage() {
 
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <Tabs value={category} onValueChange={setCategory} className="w-full sm:w-auto">
-              <TabsList className="bg-slate-800 grid grid-cols-4 w-full sm:w-auto" data-testid="news-category-tabs">
+              <TabsList className="bg-slate-800 grid grid-cols-7 w-full sm:w-auto" data-testid="news-category-tabs">
                 <TabsTrigger value="all" data-testid="category-all">All</TabsTrigger>
                 <TabsTrigger value="cannabis" data-testid="category-cannabis">Cannabis</TabsTrigger>
                 <TabsTrigger value="crypto" data-testid="category-crypto">Crypto</TabsTrigger>
                 <TabsTrigger value="ai" data-testid="category-ai">AI</TabsTrigger>
+                <TabsTrigger value="market" data-testid="category-market">Market</TabsTrigger>
+                <TabsTrigger value="international" data-testid="category-international">International</TabsTrigger>
+                <TabsTrigger value="jamaica" data-testid="category-jamaica">Jamaica</TabsTrigger>
               </TabsList>
             </Tabs>
 
