@@ -92,6 +92,9 @@ class NewsArticle(BaseModel):
     source_url: Optional[str] = None
     published_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     trending_score: float = 0.0
+    sentiment: Optional[str] = 'neutral'  # bullish, bearish, neutral
+    sentiment_score: Optional[int] = 50
+    impact: Optional[str] = 'low'  # high, medium, low
 
 class NewsArticleCreate(BaseModel):
     title: str
