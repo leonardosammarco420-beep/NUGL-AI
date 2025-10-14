@@ -436,7 +436,7 @@ export default function NewsPage() {
                   <div
                     key={article.id}
                     data-testid={`news-article-${article.id}`}
-                    onClick={() => window.open(article.source_url, '_blank')}
+                    onClick={() => handleArticleClick(article)}
                     className="group rounded-xl bg-slate-800/50 border border-teal-500/20 hover:border-teal-500/50 overflow-hidden transition-all duration-300 hover:transform hover:scale-105 cursor-pointer"
                   >
                     {article.image_url && (
