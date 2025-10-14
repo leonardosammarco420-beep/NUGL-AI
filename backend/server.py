@@ -488,6 +488,50 @@ async def get_admin_stats(user_id: str = Depends(get_current_user)):
     }
     return stats
 
+@api_router.get("/investor/quarterly-data")
+async def get_quarterly_data():
+    """Get quarterly financial data for investor relations"""
+    # This data should be stored in database and updated by admin
+    # For now, returning hardcoded data - in production, fetch from DB
+    quarterly_data = [
+        {
+            "quarter": "Q2 2024",
+            "date": "06/30/2024",
+            "revenue": 708,
+            "growth": "-",
+            "transactions": 1250
+        },
+        {
+            "quarter": "Q3 2024",
+            "date": "09/30/2024",
+            "revenue": 726,
+            "growth": "+2.5%",
+            "transactions": 1420
+        },
+        {
+            "quarter": "Q4 2024",
+            "date": "12/31/2024",
+            "revenue": 936,
+            "growth": "+28.9%",
+            "transactions": 2340
+        },
+        {
+            "quarter": "Q1 2025",
+            "date": "03/31/2025",
+            "revenue": 751,
+            "growth": "-19.8%",
+            "transactions": 1880
+        },
+        {
+            "quarter": "Q2 2025",
+            "date": "06/30/2025",
+            "revenue": 866,
+            "growth": "+15.3%",
+            "transactions": 2156
+        }
+    ]
+    return {"quarterly_data": quarterly_data}
+
 # Affiliate Links
 @api_router.get("/affiliates/stake-casino")
 async def get_stake_link():
