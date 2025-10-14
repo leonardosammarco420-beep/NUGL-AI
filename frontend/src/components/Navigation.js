@@ -243,6 +243,15 @@ export default function Navigation() {
                 Investors
               </Link>
 
+              {/* Social */}
+              <Link
+                to="/social"
+                data-testid="nav-social"
+                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 transition-colors"
+              >
+                Social
+              </Link>
+
               {/* Media Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
