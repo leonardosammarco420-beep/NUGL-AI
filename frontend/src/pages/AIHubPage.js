@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { AuthContext } from '../App';
 import Navigation from '../components/Navigation';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { MessageSquare, Brain, Sparkles, Zap, Bot, Leaf, ExternalLink } from 'lucide-react';
+import { Textarea } from '../components/ui/textarea';
+import { MessageSquare, Brain, Sparkles, Zap, Bot, Leaf, ExternalLink, Send, Loader2 } from 'lucide-react';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 export default function AIHubPage() {
+  const { API } = useContext(AuthContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedModel, setSelectedModel] = useState(searchParams.get('model') || 'gpt');
+  const [selectedModel, setSelectedModel] = useState(searchParams.get('model') || 'cannabis');
   const [prompt, setPrompt] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const aiModels = [
     {
