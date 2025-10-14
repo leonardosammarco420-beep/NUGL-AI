@@ -66,12 +66,10 @@ export default function NFTMarketplacePage() {
     }
 
     try {
-      // In production, this would interact with smart contract
       toast.success(`Purchase initiated for ${nft.name}!`, {
         description: `${nft.price} ETH will be deducted from your wallet`
       });
       
-      // Simulate purchase
       await axios.post(`${API}/nfts/${nft.id}/purchase`, {
         buyer: walletAddress,
         price: nft.price
@@ -96,7 +94,6 @@ export default function NFTMarketplacePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
             <h1 className="text-5xl font-bold text-white mb-2 flex items-center gap-3" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
@@ -106,7 +103,6 @@ export default function NFTMarketplacePage() {
             <p className="text-gray-400 text-lg">Collect exclusive cannabis-themed digital art</p>
           </div>
           
-          {/* Wallet Connection */}
           {!walletConnected ? (
             <Button 
               onClick={connectWallet}
@@ -131,7 +127,6 @@ export default function NFTMarketplacePage() {
           )}
         </div>
 
-        {/* Category Filters */}
         <Tabs value={category} onValueChange={setCategory} className="mb-8">
           <TabsList className="bg-slate-800 grid grid-cols-5">
             <TabsTrigger value="all"><Filter className="w-4 h-4 mr-2" />All</TabsTrigger>
@@ -142,7 +137,6 @@ export default function NFTMarketplacePage() {
           </TabsList>
         </Tabs>
 
-        {/* Loading State */}
         {loading && (
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((i) => (
@@ -155,7 +149,6 @@ export default function NFTMarketplacePage() {
           </div>
         )}
 
-        {/* NFT Grid */}
         {!loading && nfts.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {nfts.map((nft) => (
@@ -163,22 +156,18 @@ export default function NFTMarketplacePage() {
                 key={nft.id} 
                 className="bg-slate-800/50 border-teal-500/20 overflow-hidden hover:scale-105 transition-all duration-300 hover:border-teal-500/50 group"
               >
-                {/* NFT Image */}
                 <div className="relative overflow-hidden">
                   <img 
                     src={nft.image_url} 
                     alt={nft.name}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  {/* Rarity Badge */}
                   <div className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white ${getRarityColor(nft.rarity)}`}>
                     {nft.rarity.toUpperCase()}
                   </div>
-                  {/* Overlay on Hover */}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                {/* NFT Details */}
                 <div className="p-4">
                   <h3 className="text-lg font-bold text-white mb-2 line-clamp-1">
                     {nft.name}
@@ -187,7 +176,6 @@ export default function NFTMarketplacePage() {
                     {nft.description}
                   </p>
 
-                  {/* Stats */}
                   <div className="flex items-center gap-4 mb-4 text-sm text-gray-400">
                     <div className="flex items-center gap-1">
                       <Heart className="w-4 h-4" />
@@ -199,7 +187,6 @@ export default function NFTMarketplacePage() {
                     </div>
                   </div>
 
-                  {/* Price & Action */}
                   <div className="flex items-center justify-between pt-4 border-t border-slate-700">
                     <div>
                       <p className="text-xs text-gray-400">Price</p>
@@ -217,12 +204,11 @@ export default function NFTMarketplacePage() {
                         size="sm"
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
-                        Buy Now
+                        Buy
                       </Button>
                     )}
                   </div>
 
-                  {/* Creator */}
                   <p className="text-xs text-gray-500 mt-3">
                     Creator: {nft.creator.slice(0, 6)}...{nft.creator.slice(-4)}
                   </p>
@@ -232,7 +218,6 @@ export default function NFTMarketplacePage() {
           </div>
         )}
 
-        {/* Empty State */}
         {!loading && nfts.length === 0 && (
           <Card className="bg-slate-800/50 border-teal-500/20 p-12 text-center">
             <Sparkles className="w-16 h-16 text-gray-500 mx-auto mb-4" />
@@ -241,16 +226,14 @@ export default function NFTMarketplacePage() {
           </Card>
         )}
 
-        {/* Info Banner */}
         <Card className="bg-gradient-to-r from-teal-500/10 to-emerald-500/10 border-teal-500/30 p-6 mt-12">
           <div className="flex items-start gap-4">
             <Wallet className="w-8 h-8 text-teal-400 flex-shrink-0" />
             <div>
               <h3 className="text-xl font-bold text-white mb-2">Secure Wallet-Based Purchases</h3>
               <p className="text-gray-300 mb-3">
-                All NFT purchases are secured through your crypto wallet. Connect your MetaMask or WalletConnect 
-                to start collecting exclusive cannabis-themed digital art. Your wallet credentials remain on your 
-                platform - we never store private keys.
+                All NFT purchases are secured through your crypto wallet. Connect your MetaMask to start collecting 
+                exclusive cannabis-themed digital art. Your wallet credentials remain secure - we never store private keys.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 <div className="flex items-start gap-2">
@@ -278,76 +261,6 @@ export default function NFTMarketplacePage() {
             </div>
           </div>
         </Card>
-      </div>
-    </div>
-  );
-}
-
-  return (
-    <div className="min-h-screen bg-slate-950">
-      <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8" data-testid="nft-marketplace-header">
-          <h1 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-            NFT Marketplace
-          </h1>
-          <p className="text-gray-400">Browse, buy, and sell cannabis-themed NFTs on Ethereum and Solana</p>
-        </div>
-
-        <Tabs value={blockchain} onValueChange={setBlockchain} className="mb-8">
-          <TabsList className="bg-slate-800" data-testid="blockchain-filter">
-            <TabsTrigger value="all" data-testid="filter-all-nft">All</TabsTrigger>
-            <TabsTrigger value="ethereum" data-testid="filter-ethereum">Ethereum</TabsTrigger>
-            <TabsTrigger value="solana" data-testid="filter-solana">Solana</TabsTrigger>
-          </TabsList>
-        </Tabs>
-
-        {loading ? (
-          <div className="text-center py-20" data-testid="nfts-loading">
-            <div className="text-gray-400">Loading NFTs...</div>
-          </div>
-        ) : nfts.length === 0 ? (
-          <div className="text-center py-20" data-testid="nfts-empty">
-            <div className="text-gray-400">No NFTs available. Check back soon!</div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-testid="nfts-grid">
-            {nfts.map((nft) => (
-              <Card key={nft.id} data-testid={`nft-card-${nft.id}`} className="bg-slate-800/50 border-teal-500/20 overflow-hidden hover:border-teal-500/50 transition-all group">
-                <div className="aspect-square bg-slate-700 overflow-hidden">
-                  <img
-                    src={nft.image_url}
-                    alt={nft.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-semibold text-white">{nft.name}</h3>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      nft.blockchain === 'ethereum' ? 'bg-purple-500/20 text-purple-400' : 'bg-cyan-500/20 text-cyan-400'
-                    }`}>
-                      {nft.blockchain.toUpperCase()}
-                    </span>
-                  </div>
-                  <p className="text-gray-400 text-sm mb-3 line-clamp-2">{nft.description}</p>
-                  {nft.is_for_sale && nft.price && (
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <p className="text-gray-500 text-xs">Price</p>
-                        <p className="text-teal-400 font-semibold">{nft.price} {nft.currency}</p>
-                      </div>
-                      <Tag className="w-5 h-5 text-teal-400" />
-                    </div>
-                  )}
-                  <Button size="sm" className="w-full" data-testid={`buy-nft-${nft.id}`}>
-                    {nft.is_for_sale ? 'Buy Now' : 'View Details'}
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );
