@@ -223,10 +223,23 @@ export default function NewsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-8" data-testid="news-header">
-          <h1 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-            Market Intelligence Screener
-          </h1>
-          <p className="text-gray-400">Real-time cannabis, crypto, and AI market intelligence with sentiment analysis</p>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <h1 className="text-4xl font-bold text-white" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+              Market Intelligence Screener
+            </h1>
+            <Button
+              onClick={handleRefreshNews}
+              disabled={refreshing}
+              variant="outline"
+              size="sm"
+              className="border-teal-500/30 text-teal-400 hover:bg-teal-500/10"
+              data-testid="refresh-news-button"
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+              {refreshing ? 'Refreshing...' : 'Refresh'}
+            </Button>
+          </div>
+          <p className="text-gray-400 text-center">Real-time cannabis, crypto, and AI market intelligence with sentiment analysis</p>
         </div>
 
         {/* Search and Filter Controls */}
