@@ -177,14 +177,16 @@ export default function AIHubPage() {
                 <p className="text-gray-400 text-sm mt-1">{currentModel.description}</p>
               </div>
             </div>
-            <Button
-              onClick={() => window.open(currentModel.url, currentModel.isInternal ? '_self' : '_blank')}
-              variant="outline"
-              className="border-purple-500/30 text-purple-400 hover:bg-purple-500/10"
-            >
-              {currentModel.isInternal ? 'Open' : 'Open in New Tab'}
-              {!currentModel.isInternal && <ExternalLink className="w-4 h-4 ml-2" />}
-            </Button>
+            {!currentModel.usable && (
+              <Button
+                onClick={() => handleExternalOpen(currentModel)}
+                variant="outline"
+                className="border-purple-500/30 text-purple-400 hover:bg-purple-500/10"
+              >
+                Open & Earn Commission
+                <ExternalLink className="w-4 h-4 ml-2" />
+              </Button>
+            )}
           </div>
         </div>
 
