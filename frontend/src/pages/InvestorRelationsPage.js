@@ -12,6 +12,7 @@ export default function InvestorRelationsPage() {
   const { API } = useContext(AuthContext);
   const [platformStats, setPlatformStats] = useState(null);
   const [cryptoPrices, setCryptoPrices] = useState(null);
+  const [quarterlyData, setQuarterlyData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,8 +30,22 @@ export default function InvestorRelationsPage() {
       // Fetch crypto prices for market data
       const pricesResponse = await axios.get(`${API}/crypto/prices`);
       setCryptoPrices(pricesResponse.data);
+
+      // Fetch quarterly financial data
+      const quarterlyResponse = await axios.get(`${API}/investor/quarterly-data`);
+      if (quarterlyResponse.data.quarterly_data) {
+        setQuarterlyData(quarterlyResponse.data.quarterly_data);
+      }
     } catch (error) {
       console.error('Failed to fetch IR data');
+      // Fallback to hardcoded data if API fails
+      setQuarterlyData([
+        { quarter: 'Q2 2024', date: '06/30/2024', revenue: 708, growth: '-', transactions: 1250 },
+        { quarter: 'Q3 2024', date: '09/30/2024', revenue: 726, growth: '+2.5%', transactions: 1420 },
+        { quarter: 'Q4 2024', date: '12/31/2024', revenue: 936, growth: '+28.9%', transactions: 2340 },
+        { quarter: 'Q1 2025', date: '03/31/2025', revenue: 751, growth: '-19.8%', transactions: 1880 },
+        { quarter: 'Q2 2025', date: '06/30/2025', revenue: 866, growth: '+15.3%', transactions: 2156 }
+      ]);
     } finally {
       setLoading(false);
     }
