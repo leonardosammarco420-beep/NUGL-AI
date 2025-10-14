@@ -281,6 +281,25 @@ export default function Navigation() {
                   </Link>
                 ))}
               </div>
+
+              {/* Media Section for Mobile */}
+              <div className="pt-2 border-t border-teal-500/10">
+                <div className="px-3 py-2 text-xs font-semibold text-teal-400 flex items-center gap-2">
+                  <Video className="w-4 h-4" />
+                  Media
+                </div>
+                {mediaLinks.map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setMobileMenu(false)}
+                    className="block pl-6 pr-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 flex items-center gap-2"
+                  >
+                    <link.icon className="w-4 h-4" />
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
               
               {user ? (
                 <>
