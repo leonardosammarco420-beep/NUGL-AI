@@ -58,6 +58,7 @@ export default function Navigation() {
     { to: '/crypto', label: 'Crypto', highlight: true },
     { to: '/nft-marketplace', label: 'NFTs' },
     { to: '/shop', label: 'Shop' },
+    { to: '/affiliate', label: 'Affiliate' },
     { to: '/investors', label: 'Investors' },
   ];
 
