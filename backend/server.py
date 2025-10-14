@@ -344,6 +344,39 @@ async def get_trending_news():
             article["published_at"] = datetime.fromisoformat(article["published_at"])
     return articles
 
+@api_router.post("/news/refresh")
+async def refresh_news():
+    """Manually trigger news refresh from all RSS feeds"""
+    try:
+        from services.data_aggregator import NewsAggregator, SentimentAnalyzer
+        
+        # Fetch articles from all feeds
+        articles = await NewsAggregator.aggregate_all_feeds()
+        
+        # Add sentiment analysis
+        for article in articles:
+            sentiment_data = SentimentAnalyzer.analyze(
+                article['title'] + ' ' + article.get('content', '')
+            )
+            article.update(sentiment_data)
+        
+        # Insert new articles (avoid duplicates)
+        inserted_count = 0
+        for article in articles:
+            existing = await db.news_articles.find_one({'title': article['title']})
+            if not existing:
+                await db.news_articles.insert_one(article)
+                inserted_count += 1
+        
+        return {
+            'success': True,
+            'message': f'Refreshed news feed. Added {inserted_count} new articles.',
+            'total_fetched': len(articles),
+            'new_articles': inserted_count
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 # Strain Routes
 @api_router.get("/strains", response_model=List[Strain])
 async def get_strains(search: Optional[str] = None, strain_type: Optional[str] = None):
