@@ -82,6 +82,7 @@ function App() {
             <Route path="/earnings" element={<EarningsPage />} />
             <Route path="/investors" element={<InvestorRelationsPage />} />
             <Route path="/media/:category" element={<MediaPage />} />
+            <Route path="/affiliate" element={<AffiliateDashboardPage />} />
           </Routes>
         </div>
       </BrowserRouter>
