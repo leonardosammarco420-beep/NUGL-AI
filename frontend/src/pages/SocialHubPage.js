@@ -10,13 +10,13 @@ export default function SocialHubPage() {
   const socialAccounts = [
     {
       platform: 'instagram',
-      name: 'NUGL Official',
-      handle: '@nuglofficial',
-      url: 'https://www.instagram.com/nuglofficial/',
-      embedUrl: 'https://www.instagram.com/nuglofficial/embed',
+      name: 'Kaya Inc',
+      handle: '@kaya.inc',
+      url: 'https://www.instagram.com/kaya.inc/',
+      embedUrl: 'https://www.instagram.com/kaya.inc/embed',
       icon: Instagram,
       color: 'from-purple-500 to-pink-500',
-      stats: { followers: '12.5K', engagement: '4.2%' }
+      stats: { followers: '18.7K', engagement: '8.2%' }
     },
     {
       platform: 'instagram',
@@ -37,6 +37,16 @@ export default function SocialHubPage() {
       icon: Instagram,
       color: 'from-purple-500 to-pink-500',
       stats: { followers: '3.2K', engagement: '6.8%' }
+    },
+    {
+      platform: 'instagram',
+      name: 'NUGL Official',
+      handle: '@nuglofficial',
+      url: 'https://www.instagram.com/nuglofficial/',
+      embedUrl: 'https://www.instagram.com/nuglofficial/embed',
+      icon: Instagram,
+      color: 'from-purple-500 to-pink-500',
+      stats: { followers: '12.5K', engagement: '4.2%' }
     },
     {
       platform: 'twitter',
