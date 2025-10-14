@@ -90,6 +90,8 @@ class NewsArticle(BaseModel):
     category: str  # cannabis, crypto, ai
     image_url: Optional[str] = None
     source_url: Optional[str] = None
+    source_name: Optional[str] = None  # Leafly, Seedsman, etc.
+    affiliate_link: Optional[str] = None  # Affiliate tracking link
     published_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     trending_score: float = 0.0
     sentiment: Optional[str] = 'neutral'  # bullish, bearish, neutral
