@@ -255,7 +255,7 @@ export default function InvestorRelationsPage() {
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                   <XAxis dataKey="quarter" stroke="#94a3b8" />
-                  <YAxis stroke="#94a3b8" />
+                  <YAxis stroke="#94a3b8" label={{ value: 'Revenue ($K)', angle: -90, position: 'insideLeft', fill: '#94a3b8' }} />
                   <Tooltip
                     contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px' }}
                     labelStyle={{ color: '#f8fafc' }}
@@ -263,6 +263,76 @@ export default function InvestorRelationsPage() {
                   <Area type="monotone" dataKey="revenue" stroke="#14b8a6" fillOpacity={1} fill="url(#colorRevenue)" name="Revenue ($K)" />
                 </AreaChart>
               </ResponsiveContainer>
+            </Card>
+
+            {/* Quarterly Performance Table */}
+            <Card className="bg-slate-800/50 border-teal-500/20 p-6">
+              <h3 className="text-xl font-semibold text-white mb-6">Quarterly Performance Overview</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b border-slate-700">
+                      <th className="pb-3 text-gray-400 font-semibold text-sm">Quarter</th>
+                      <th className="pb-3 text-gray-400 font-semibold text-sm">Period End</th>
+                      <th className="pb-3 text-gray-400 font-semibold text-sm text-right">Total Revenue</th>
+                      <th className="pb-3 text-gray-400 font-semibold text-sm text-right">QoQ Growth</th>
+                      <th className="pb-3 text-gray-400 font-semibold text-sm text-right">Transactions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...quarterlyData].reverse().map((quarter, idx) => (
+                      <tr key={idx} className="border-b border-slate-700/50 hover:bg-slate-700/30 transition-colors">
+                        <td className="py-4">
+                          <div className="flex items-center gap-2">
+                            <span className="text-white font-semibold">{quarter.quarter}</span>
+                            {idx === 0 && (
+                              <span className="px-2 py-0.5 bg-teal-500/20 text-teal-400 text-xs rounded-full">Latest</span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="py-4 text-gray-300">{quarter.date}</td>
+                        <td className="py-4 text-right">
+                          <span className="text-white font-semibold text-lg">${quarter.revenue}K</span>
+                        </td>
+                        <td className="py-4 text-right">
+                          {quarter.growth !== '-' ? (
+                            <span className={`font-semibold ${quarter.growth.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
+                              {quarter.growth}
+                            </span>
+                          ) : (
+                            <span className="text-gray-500">-</span>
+                          )}
+                        </td>
+                        <td className="py-4 text-right text-gray-300">{quarter.transactions.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot className="border-t-2 border-teal-500/30">
+                    <tr>
+                      <td className="pt-4 text-gray-400 font-semibold" colSpan="2">Trailing 12 Months (TTM)</td>
+                      <td className="pt-4 text-right">
+                        <span className="text-teal-400 font-bold text-xl">
+                          ${quarterlyData.slice(-4).reduce((sum, q) => sum + q.revenue, 0)}K
+                        </span>
+                      </td>
+                      <td className="pt-4 text-right text-green-400 font-semibold">+34.2%</td>
+                      <td className="pt-4 text-right">
+                        <span className="text-white font-semibold">
+                          {quarterlyData.slice(-4).reduce((sum, q) => sum + q.transactions, 0).toLocaleString()}
+                        </span>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div className="mt-6 pt-6 border-t border-slate-700">
+                <p className="text-gray-400 text-sm mb-2">
+                  <strong className="text-white">Note:</strong> All revenue figures are in thousands (K). Data is updated quarterly following the close of each fiscal quarter.
+                </p>
+                <p className="text-gray-400 text-sm">
+                  <strong className="text-white">Next Update:</strong> Q3 2025 results expected by September 30, 2025
+                </p>
+              </div>
             </Card>
 
             {/* Revenue Breakdown */}
