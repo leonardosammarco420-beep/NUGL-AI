@@ -297,11 +297,7 @@ export default function NewsPage() {
                         <span className="text-gray-500 text-xs">
                           {new Date(article.published_at).toLocaleTimeString()}
                         </span>
-                        <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                          article.category === 'cannabis' ? 'bg-green-500/20 text-green-400' :
-                          article.category === 'crypto' ? 'bg-orange-500/20 text-orange-400' :
-                          'bg-blue-500/20 text-blue-400'
-                        }`}>
+                        <span className={`px-2 py-0.5 rounded text-xs font-medium ${getCategoryColor(article.category)}`}>
                           {article.category}
                         </span>
                       </div>
