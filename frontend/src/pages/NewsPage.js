@@ -96,6 +96,18 @@ export default function NewsPage() {
     return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
   };
 
+  const getCategoryColor = (cat) => {
+    switch(cat) {
+      case 'cannabis': return 'bg-green-500/20 text-green-400';
+      case 'crypto': return 'bg-orange-500/20 text-orange-400';
+      case 'ai': return 'bg-blue-500/20 text-blue-400';
+      case 'market': return 'bg-purple-500/20 text-purple-400';
+      case 'international': return 'bg-cyan-500/20 text-cyan-400';
+      case 'jamaica': return 'bg-yellow-500/20 text-yellow-400';
+      default: return 'bg-gray-500/20 text-gray-400';
+    }
+  };
+
   const getImpactColor = (impact) => {
     if (impact === 'high') return 'text-red-400';
     if (impact === 'medium') return 'text-orange-400';
