@@ -451,10 +451,11 @@ export default function NewsPage() {
                         {article.content}
                       </p>
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center text-gray-500 text-xs">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {new Date(article.published_at).toLocaleDateString()}
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center gap-2 text-xs">
+                            <span className="text-teal-400 font-semibold">{getSourceName(article.source_url)}</span>
+                            <span className="text-gray-600">•</span>
+                            <span className="text-gray-500">{formatTimestamp(article.published_at)}</span>
                           </div>
                           <span className={`text-xs font-semibold ${getImpactColor(article.impact)}`}>
                             {article.impact.toUpperCase()} IMPACT
