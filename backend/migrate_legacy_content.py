@@ -128,7 +128,8 @@ async def populate_media_content():
             for url in mapping['urls']:
                 print(f"   Fetching from: {url}")
                 articles = await fetch_articles_from_category(session, url, mapping['new_category'])
-                category_articles.extend(articles)
+                if articles:
+                    category_articles.extend(articles)
                 await asyncio.sleep(1)  # Be respectful with requests
             
             # Insert into database
