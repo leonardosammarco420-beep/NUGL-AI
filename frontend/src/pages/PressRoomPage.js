@@ -242,27 +242,41 @@ export default function PressRoomPage() {
                 className="bg-slate-800/50 border border-slate-700 hover:border-teal-500/50 rounded-xl p-6 transition-all"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      {release.media_source && (
-                        <span className="px-3 py-1 rounded-full bg-teal-500/20 text-teal-400 text-xs font-semibold">
-                          {release.media_source}
-                        </span>
-                      )}
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
-                        <Calendar className="w-3 h-3" />
-                        {formatDate(release.published_at)}
+                  <div className="flex items-start gap-4 flex-1">
+                    {/* Publication Logo */}
+                    {release.media_source && (
+                      <img 
+                        src={getPublicationLogo(release.media_source)}
+                        alt={release.media_source}
+                        className="w-10 h-10 rounded-lg object-contain bg-white p-1"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    )}
+                    
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2 flex-wrap">
+                        {release.media_source && (
+                          <span className="px-3 py-1 rounded-full bg-teal-500/20 text-teal-400 text-xs font-semibold">
+                            {release.media_source}
+                          </span>
+                        )}
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <Calendar className="w-3 h-3" />
+                          {formatDate(release.extractedDate || release.published_at)}
+                        </div>
                       </div>
+                      <h3 className="text-lg font-semibold text-white mb-2 hover:text-teal-400 transition-colors">
+                        {release.title}
+                      </h3>
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2 hover:text-teal-400 transition-colors">
-                      {release.title}
-                    </h3>
                   </div>
                   <Button
                     onClick={() => window.open(release.link, '_blank')}
                     variant="outline"
                     size="sm"
-                    className="border-teal-500/30 text-teal-400 hover:bg-teal-500/10"
+                    className="border-teal-500/30 text-teal-400 hover:bg-teal-500/10 flex-shrink-0"
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
                     Read
