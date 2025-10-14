@@ -85,10 +85,10 @@ export default function SocialHubPage() {
     : socialAccounts.filter(acc => acc.platform === selectedPlatform);
 
   const totalStats = {
-    totalFollowers: '67K+',
-    avgEngagement: '5.0%',
-    totalPosts: '1.2K+',
-    weeklyReach: '125K+'
+    totalFollowers: '86K+',
+    avgEngagement: '5.4%',
+    totalPosts: '1.5K+',
+    weeklyReach: '175K+'
   };
 
   return (
