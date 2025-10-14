@@ -1,0 +1,287 @@
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../App';
+import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { toast } from 'sonner';
+import axios from 'axios';
+import { Menu, X, LogOut, User, Wallet, Crown, Gift, Building2 } from 'lucide-react';
+
+export default function Navigation() {
+  const { user, token, login, logout, API } = useContext(AuthContext);
+  const [showAuth, setShowAuth] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const navigate = useNavigate();
+
+  const [loginData, setLoginData] = useState({ username: '', password: '' });
+  const [registerData, setRegisterData] = useState({ username: '', email: '', password: '' });
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${API}/auth/login`, loginData);
+      login(response.data.token, { id: response.data.user_id, username: response.data.username });
+      setShowAuth(false);
+      toast.success('Welcome back!');
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Login failed');
+    }
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${API}/auth/register`, { ...registerData, auth_method: 'jwt' });
+      login(response.data.token, { id: response.data.user_id, username: response.data.username });
+      setShowAuth(false);
+      toast.success('Account created successfully!');
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Registration failed');
+    }
+  };
+
+  const navLinks = [
+    { to: '/', label: 'Home' },
+    { to: '/news', label: 'News' },
+    { to: '/crypto', label: 'Crypto', highlight: true },
+    { to: '/strains', label: 'Strains' },
+    { to: '/seeds', label: 'Seeds' },
+    { to: '/nft-marketplace', label: 'NFTs' },
+    { to: '/shop', label: 'Shop' },
+    { to: '/investors', label: 'Investors' },
+    { to: '/chat', label: 'AI Chat' },
+  ];
+
+  return (
+    <>
+      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-slate-900/80 border-b border-teal-500/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link to="/" className="flex items-center space-x-2" data-testid="logo-link">
+              <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">
+                NUGL
+              </div>
+            </Link>
+
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center space-x-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  data-testid={`nav-${link.label.toLowerCase().replace(' ', '-')}`}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    link.highlight
+                      ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white hover:from-teal-600 hover:to-emerald-600'
+                      : 'text-gray-300 hover:text-teal-400 hover:bg-slate-800/50'
+                  }`}
+                >
+                  {link.highlight && <Building2 className="w-4 h-4 inline mr-1" />}
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            <div className="hidden md:flex items-center space-x-3">
+              {user ? (
+                <>
+                  <Button
+                    onClick={() => navigate('/earnings')}
+                    variant="outline"
+                    size="sm"
+                    data-testid="earnings-nav-button"
+                    className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+                  >
+                    <Gift className="w-4 h-4 mr-2" />
+                    Earnings
+                  </Button>
+                  <Button
+                    onClick={() => navigate('/subscription')}
+                    variant="outline"
+                    size="sm"
+                    data-testid="subscription-nav-button"
+                    className="border-purple-500/30 text-purple-400 hover:bg-purple-500/10"
+                  >
+                    <Crown className="w-4 h-4 mr-2" />
+                    Premium
+                  </Button>
+                  <Button
+                    onClick={() => navigate('/wallet')}
+                    variant="outline"
+                    size="sm"
+                    data-testid="wallet-nav-button"
+                    className="border-teal-500/30 text-teal-400 hover:bg-teal-500/10"
+                  >
+                    <Wallet className="w-4 h-4 mr-2" />
+                    Wallet
+                  </Button>
+                  <Button
+                    onClick={() => navigate('/profile')}
+                    variant="outline"
+                    size="sm"
+                    data-testid="profile-nav-button"
+                    className="border-teal-500/30 text-teal-400 hover:bg-teal-500/10"
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    {user.username}
+                  </Button>
+                  <Button
+                    onClick={logout}
+                    variant="ghost"
+                    size="sm"
+                    data-testid="logout-button"
+                    className="text-gray-400 hover:text-red-400"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  onClick={() => setShowAuth(true)}
+                  data-testid="login-button"
+                  className="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white"
+                >
+                  Sign In
+                </Button>
+              )}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenu(!mobileMenu)}
+              className="md:hidden text-gray-300 hover:text-teal-400"
+              data-testid="mobile-menu-toggle"
+            >
+              {mobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenu && (
+          <div className="md:hidden border-t border-teal-500/20 bg-slate-900" data-testid="mobile-menu">
+            <div className="px-4 py-3 space-y-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMobileMenu(false)}
+                  className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {user ? (
+                <>
+                  <Button onClick={() => { navigate('/wallet'); setMobileMenu(false); }} variant="outline" className="w-full">
+                    <Wallet className="w-4 h-4 mr-2" /> Wallet
+                  </Button>
+                  <Button onClick={() => { navigate('/profile'); setMobileMenu(false); }} variant="outline" className="w-full">
+                    <User className="w-4 h-4 mr-2" /> Profile
+                  </Button>
+                  <Button onClick={logout} variant="ghost" className="w-full text-red-400">
+                    <LogOut className="w-4 h-4 mr-2" /> Logout
+                  </Button>
+                </>
+              ) : (
+                <Button onClick={() => { setShowAuth(true); setMobileMenu(false); }} className="w-full">
+                  Sign In
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Auth Dialog */}
+      <Dialog open={showAuth} onOpenChange={setShowAuth}>
+        <DialogContent className="bg-slate-900 border-teal-500/30" data-testid="auth-dialog">
+          <DialogHeader>
+            <DialogTitle className="text-teal-400">Welcome to NUGL</DialogTitle>
+          </DialogHeader>
+          <Tabs defaultValue="login" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 bg-slate-800">
+              <TabsTrigger value="login" data-testid="login-tab">Login</TabsTrigger>
+              <TabsTrigger value="register" data-testid="register-tab">Register</TabsTrigger>
+            </TabsList>
+            <TabsContent value="login" data-testid="login-form">
+              <form onSubmit={handleLogin} className="space-y-4 mt-4">
+                <div>
+                  <Label htmlFor="login-username">Username</Label>
+                  <Input
+                    id="login-username"
+                    data-testid="login-username-input"
+                    value={loginData.username}
+                    onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
+                    className="bg-slate-800 border-slate-700"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="login-password">Password</Label>
+                  <Input
+                    id="login-password"
+                    type="password"
+                    data-testid="login-password-input"
+                    value={loginData.password}
+                    onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                    className="bg-slate-800 border-slate-700"
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full" data-testid="login-submit-button">
+                  Login
+                </Button>
+              </form>
+            </TabsContent>
+            <TabsContent value="register" data-testid="register-form">
+              <form onSubmit={handleRegister} className="space-y-4 mt-4">
+                <div>
+                  <Label htmlFor="register-username">Username</Label>
+                  <Input
+                    id="register-username"
+                    data-testid="register-username-input"
+                    value={registerData.username}
+                    onChange={(e) => setRegisterData({ ...registerData, username: e.target.value })}
+                    className="bg-slate-800 border-slate-700"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="register-email">Email</Label>
+                  <Input
+                    id="register-email"
+                    type="email"
+                    data-testid="register-email-input"
+                    value={registerData.email}
+                    onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
+                    className="bg-slate-800 border-slate-700"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="register-password">Password</Label>
+                  <Input
+                    id="register-password"
+                    type="password"
+                    data-testid="register-password-input"
+                    value={registerData.password}
+                    onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
+                    className="bg-slate-800 border-slate-700"
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full" data-testid="register-submit-button">
+                  Register
+                </Button>
+              </form>
+            </TabsContent>
+          </Tabs>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
