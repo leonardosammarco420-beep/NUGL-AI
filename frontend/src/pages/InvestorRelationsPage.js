@@ -52,12 +52,12 @@ export default function InvestorRelationsPage() {
   // Financial Highlights (Actual NUGL Inc. data)
   const financialData = {
     marketCap: '$5.2M',
-    revenue: '$2.9M',
-    revenueGrowth: '+185%',
+    revenue: '$3.29M', // TTM (Trailing 12 Months from latest 4 quarters)
+    revenueGrowth: '+34.2%',
     grossMargin: '55%',
     users: platformStats?.total_users || 0,
     userGrowth: '+234%',
-    arr: '$2.9M', // Annual Recurring Revenue
+    arr: '$3.46M', // Annual Recurring Revenue (projected from Q2 2025)
     cashPosition: '$450K'
   };
 
