@@ -968,6 +968,30 @@ async def get_live_ticker():
         logger.error(f"Error fetching ticker data: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to fetch ticker data")
 
+@api_router.get("/media/legacy/{category}")
+async def get_legacy_media_content(category: str):
+    """Get legacy content from nugl.com for a specific category"""
+    try:
+        # Fetch articles for the category
+        articles = await db.legacy_articles.find(
+            {'category_id': category},
+            {'_id': 0}
+        ).to_list(length=100)
+        
+        # Fetch category info
+        category_info = await db.legacy_categories.find_one(
+            {'category_id': category},
+            {'_id': 0}
+        )
+        
+        return {
+            'category': category_info,
+            'articles': articles
+        }
+    except Exception as e:
+        logger.error(f"Error fetching legacy content: {str(e)}")
+        return {'category': None, 'articles': []}
+
 # ============================================
 
 # Include the router in the main app
