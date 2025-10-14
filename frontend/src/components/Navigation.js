@@ -234,15 +234,6 @@ export default function Navigation() {
                 Shop
               </Link>
 
-              {/* Investors */}
-              <Link
-                to="/investors"
-                data-testid="nav-investors"
-                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 transition-colors"
-              >
-                Investors
-              </Link>
-
               {/* Social */}
               <Link
                 to="/social"
