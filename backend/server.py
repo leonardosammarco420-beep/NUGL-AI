@@ -377,6 +377,26 @@ async def refresh_news():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# Press Release Routes
+class PressRelease(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    media_source: str
+    link: str
+    published_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+@api_router.get("/press-releases")
+async def get_press_releases():
+    releases = await db.press_releases.find({}, {"_id": 0}).sort("published_at", -1).to_list(1000)
+    return releases
+
+@api_router.post("/press-releases")
+async def create_press_release(release: PressRelease):
+    release_dict = release.dict()
+    await db.press_releases.insert_one(release_dict)
+    return {"success": True, "id": release.id}
+
 # Strain Routes
 @api_router.get("/strains", response_model=List[Strain])
 async def get_strains(search: Optional[str] = None, strain_type: Optional[str] = None):
