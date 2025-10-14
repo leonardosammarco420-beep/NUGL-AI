@@ -85,6 +85,18 @@ class NewsAggregator:
                 all_articles.extend(articles)
         
         return all_articles
+    
+    @classmethod
+    async def aggregate_category(cls, category):
+        """Aggregate news from a specific category"""
+        articles = []
+        
+        if category in cls.RSS_FEEDS:
+            for feed_url in cls.RSS_FEEDS[category]:
+                category_articles = await cls.fetch_rss_feed(feed_url, category)
+                articles.extend(category_articles)
+        
+        return articles
 
 
 class SentimentAnalyzer:
