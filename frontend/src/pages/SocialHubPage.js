@@ -204,20 +204,57 @@ export default function SocialHubPage() {
 
               {/* Embedded Feed Preview */}
               <div className="aspect-square bg-slate-900 relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center p-6">
-                    <account.icon className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                    <p className="text-sm text-gray-500 mb-4">
-                      Click below to view live {account.platform} feed
-                    </p>
-                    <Button
-                      onClick={() => window.open(account.url, '_blank')}
-                      className={`bg-gradient-to-r ${account.color} text-white hover:opacity-90`}
+                {account.platform === 'instagram' ? (
+                  <iframe
+                    src={`${account.url}embed/`}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    scrolling="no"
+                    allowTransparency={true}
+                  />
+                ) : account.platform === 'twitter' ? (
+                  <div className="w-full h-full overflow-auto">
+                    <a 
+                      className="twitter-timeline" 
+                      data-height="500" 
+                      data-theme="dark" 
+                      href={`${account.url}?ref_src=twsrc%5Etfw`}
                     >
-                      View Feed
-                    </Button>
+                      Loading Twitter feed...
+                    </a>
                   </div>
-                </div>
+                ) : account.platform === 'facebook' ? (
+                  <iframe
+                    src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(account.url)}&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId`}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    scrolling="yes"
+                    allow="encrypted-media"
+                  />
+                ) : account.platform === 'youtube' ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed?listType=user_uploads&list=${account.handle.replace('@', '')}`}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center p-6">
+                      <account.icon className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                      <p className="text-sm text-gray-500 mb-4">
+                        Click below to view live {account.platform} feed
+                      </p>
+                      <Button
+                        onClick={() => window.open(account.url, '_blank')}
+                        className={`bg-gradient-to-r ${account.color} text-white hover:opacity-90`}
+                      >
+                        View Feed
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ))}
