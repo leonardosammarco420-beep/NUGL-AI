@@ -899,14 +899,12 @@ async def get_live_ticker():
         ticker_data = []
         
         # Add crypto data
-        crypto_map = {'bitcoin': 'BTC', 'ethereum': 'ETH', 'solana': 'SOL'}
-        for coin_id, symbol in crypto_map.items():
-            if coin_id in crypto_prices.get('crypto', {}):
-                coin_data = crypto_prices['crypto'][coin_id]
+        if 'crypto' in crypto_prices and isinstance(crypto_prices['crypto'], list):
+            for coin in crypto_prices['crypto']:
                 ticker_data.append({
-                    'symbol': symbol,
-                    'price': coin_data.get('price', 0),
-                    'change': coin_data.get('change_24h', 0),
+                    'symbol': coin['symbol'],
+                    'price': coin['price'],
+                    'change': coin.get('change_24h', 0),
                     'type': 'crypto'
                 })
         
