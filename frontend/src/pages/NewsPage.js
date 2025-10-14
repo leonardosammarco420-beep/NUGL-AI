@@ -18,25 +18,30 @@ export default function NewsPage() {
   const [viewMode, setViewMode] = useState('heatmap'); // heatmap, feed, grid
   const [sentimentFilter, setSentimentFilter] = useState('all');
   const [timeFilter, setTimeFilter] = useState('24h');
-  const [liveTickerData, setLiveTickerData] = useState([
-    { symbol: 'BTC', change: 5.2, price: 45234 },
-    { symbol: 'TLRY', change: -2.1, price: 3.45 },
-    { symbol: 'CGC', change: 3.8, price: 7.23 },
-    { symbol: 'ETH', change: 4.1, price: 2342 },
-  ]);
+  const [liveTickerData, setLiveTickerData] = useState([]);
 
   useEffect(() => {
     fetchNews();
-    const interval = setInterval(() => {
-      // Simulate live ticker updates
-      setLiveTickerData(prev => prev.map(item => ({
-        ...item,
-        change: item.change + (Math.random() - 0.5) * 0.5,
-        price: item.price * (1 + (Math.random() - 0.5) * 0.01)
-      })));
-    }, 5000);
-    return () => clearInterval(interval);
+    fetchTickerData();
+    
+    // Update ticker every 10 seconds
+    const tickerInterval = setInterval(() => {
+      fetchTickerData();
+    }, 10000);
+    
+    return () => clearInterval(tickerInterval);
   }, [category]);
+
+  const fetchTickerData = async () => {
+    try {
+      const response = await axios.get(`${API}/ticker`);
+      if (response.data.ticker) {
+        setLiveTickerData(response.data.ticker);
+      }
+    } catch (error) {
+      console.error('Failed to fetch ticker data', error);
+    }
+  };
 
   const fetchNews = async () => {
     setLoading(true);
