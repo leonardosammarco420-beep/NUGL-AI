@@ -136,6 +136,41 @@ export default function Navigation() {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              {/* Media Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button 
+                    className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 transition-colors flex items-center gap-1"
+                    data-testid="nav-media"
+                  >
+                    <Video className="w-4 h-4" />
+                    Media
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  className="bg-slate-900 border-teal-500/30 min-w-[180px]"
+                  align="end"
+                >
+                  {mediaLinks.map((link) => (
+                    <DropdownMenuItem 
+                      key={link.to}
+                      asChild
+                      className="cursor-pointer text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 focus:text-teal-400 focus:bg-slate-800/50"
+                    >
+                      <Link 
+                        to={link.to} 
+                        className="flex items-center gap-2 w-full"
+                        data-testid={`media-${link.label.toLowerCase().replace(' ', '-')}`}
+                      >
+                        <link.icon className="w-4 h-4" />
+                        {link.label}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
 
             <div className="hidden md:flex items-center space-x-3">
