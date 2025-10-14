@@ -278,6 +278,15 @@ export default function Navigation() {
                 </DropdownMenuContent>
               </DropdownMenu>
 
+              {/* Social */}
+              <Link
+                to="/social"
+                data-testid="nav-social"
+                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 transition-colors"
+              >
+                Social
+              </Link>
+
               {/* Affiliate */}
               <Link
                 to="/affiliate"
