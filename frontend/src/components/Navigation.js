@@ -283,16 +283,6 @@ export default function Navigation() {
               {user ? (
                 <>
                   <Button
-                    onClick={() => navigate('/affiliate')}
-                    variant="outline"
-                    size="sm"
-                    data-testid="affiliate-nav-button"
-                    className="border-teal-500/30 text-teal-400 hover:bg-teal-500/10"
-                  >
-                    <TrendingUp className="w-4 h-4 mr-2" />
-                    Affiliate
-                  </Button>
-                  <Button
                     onClick={() => navigate('/earnings')}
                     variant="outline"
                     size="sm"
