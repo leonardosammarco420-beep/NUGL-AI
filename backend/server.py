@@ -447,6 +447,28 @@ async def purchase_nft(nft_id: str, purchase_data: dict):
     
     return {"success": True, "message": "NFT purchased successfully", "transaction": transaction}
 
+@api_router.get("/wallet/user/{wallet_address}")
+async def get_wallet_user(wallet_address: str):
+    """Get user info by wallet address"""
+    user = await db.wallet_users.find_one(
+        {"wallet_address": wallet_address},
+        {"_id": 0}
+    )
+    
+    if not user:
+        # Create new user on first connection
+        user = {
+            "wallet_address": wallet_address,
+            "credits": 500,  # Starting credits
+            "username": f"User {wallet_address[:6]}",
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "nfts_owned": [],
+            "purchases": []
+        }
+        await db.wallet_users.insert_one(user)
+    
+    return user
+
 # AI Chatbot Route
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat(message: ChatMessage):
