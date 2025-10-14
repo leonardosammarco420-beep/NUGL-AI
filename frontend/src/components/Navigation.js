@@ -278,14 +278,50 @@ export default function Navigation() {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Investors */}
-              <Link
-                to="/investors"
-                data-testid="nav-investors"
-                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 transition-colors"
-              >
-                Investors
-              </Link>
+              {/* Investors Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button 
+                    className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 transition-colors flex items-center gap-1"
+                    data-testid="nav-investors"
+                  >
+                    <Building2 className="w-4 h-4" />
+                    Investors
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  className="bg-slate-900 border-teal-500/30 min-w-[180px]"
+                  align="end"
+                >
+                  <DropdownMenuItem 
+                    asChild
+                    className="cursor-pointer text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 focus:text-teal-400 focus:bg-slate-800/50"
+                  >
+                    <Link 
+                      to="/investors" 
+                      className="flex items-center gap-2 w-full"
+                      data-testid="investor-relations"
+                    >
+                      <TrendingUp className="w-4 h-4" />
+                      Investor Relations
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    asChild
+                    className="cursor-pointer text-gray-300 hover:text-teal-400 hover:bg-slate-800/50 focus:text-teal-400 focus:bg-slate-800/50"
+                  >
+                    <Link 
+                      to="/press-room" 
+                      className="flex items-center gap-2 w-full"
+                      data-testid="press-room"
+                    >
+                      <FileText className="w-4 h-4" />
+                      Press Room
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
               {/* Affiliate */}
               <Link
