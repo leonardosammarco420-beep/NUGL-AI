@@ -109,6 +109,27 @@ export default function NewsPage() {
     }
   };
 
+  const trackAffiliateClick = async (article) => {
+    try {
+      const sourceName = getSourceName(article.source_url);
+      await axios.post(`${API}/affiliate/track-click`, {
+        partner_id: sourceName.toLowerCase().replace(' ', '-'),
+        partner_name: sourceName,
+        source_page: 'news',
+        article_id: article.id,
+        article_title: article.title
+      });
+      console.log('Affiliate click tracked:', sourceName);
+    } catch (error) {
+      console.error('Failed to track click', error);
+    }
+  };
+
+  const handleArticleClick = (article) => {
+    trackAffiliateClick(article);
+    window.open(article.source_url, '_blank');
+  };
+
   const saveArticle = async (articleId) => {
     if (!token) {
       toast.error('Please login to save articles');
