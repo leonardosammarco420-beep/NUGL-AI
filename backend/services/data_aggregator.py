@@ -13,7 +13,7 @@ class NewsAggregator:
         'cannabis': [
             'https://www.marijuanamoment.net/feed/',
             'https://www.leafly.com/news/feed',
-            'https://www.cannab istech.com/feed/',
+            'https://www.cannabistech.com/feed/',
         ],
         'crypto': [
             'https://cointelegraph.com/rss',
@@ -23,6 +23,21 @@ class NewsAggregator:
         'ai': [
             'https://venturebeat.com/category/ai/feed/',
             'https://www.artificialintelligence-news.com/feed/',
+        ],
+        'market': [
+            'https://www.bloomberg.com/feed/podcast/etf-iq',
+            'https://www.marketwatch.com/rss/topstories',
+            'https://finance.yahoo.com/news/rssindex',
+        ],
+        'international': [
+            'https://www.aljazeera.com/xml/rss/all.xml',
+            'https://www.bbc.co.uk/news/world/rss.xml',
+            'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+        ],
+        'jamaica': [
+            'https://www.loopjamaica.com/rss',
+            'https://jamaica-gleaner.com/feed',
+            'https://rjrnewsonline.com/feed/',
         ]
     }
     
