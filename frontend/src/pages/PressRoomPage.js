@@ -51,10 +51,16 @@ export default function PressRoomPage() {
     }
   };
 
-  const filteredReleases = pressReleases.filter(release =>
-    release.title.toLowerCase().includes(search.toLowerCase()) ||
-    release.media_source.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredReleases = pressReleases
+    .filter(release =>
+      release.title.toLowerCase().includes(search.toLowerCase()) ||
+      release.media_source.toLowerCase().includes(search.toLowerCase())
+    )
+    .map(release => ({
+      ...release,
+      extractedDate: extractDateFromArticle(release)
+    }))
+    .sort((a, b) => b.extractedDate - a.extractedDate);
 
   // Extract date from URL or use title
   const extractDateFromArticle = (release) => {
