@@ -34,22 +34,26 @@ export default function PressRoomPage() {
 
   // Extract date from URL or use title
   const extractDateFromArticle = (release) => {
-    // Try format: /2021/11/26/
+    // Try format: /2021/11/26/ (full year)
     let urlDateMatch = release.link.match(/\/(\d{4})\/(\d{2})\/(\d{2})\//);
     if (urlDateMatch) {
       return new Date(urlDateMatch[1], urlDateMatch[2] - 1, urlDateMatch[3]);
     }
     
-    // Try format: /20211126/
+    // Try format: /20211126/ (Gleaner format)
     urlDateMatch = release.link.match(/\/(\d{4})(\d{2})(\d{2})\//);
     if (urlDateMatch) {
       return new Date(urlDateMatch[1], urlDateMatch[2] - 1, urlDateMatch[3]);
     }
     
-    // Try format: /2023/02/28/ (GlobeNewswire)
-    urlDateMatch = release.link.match(/\/(\d{4})\/(\d{2})\/(\d{2})\//);
+    // Try format: /24/11/ (Benzinga 2-digit year: YY/MM/)
+    urlDateMatch = release.link.match(/\/(\d{2})\/(\d{2})\/\d+/);
     if (urlDateMatch) {
-      return new Date(urlDateMatch[1], urlDateMatch[2] - 1, urlDateMatch[3]);
+      const year = parseInt(urlDateMatch[1]);
+      const month = parseInt(urlDateMatch[2]);
+      // Convert 2-digit year: 18-99 = 2018-2099, 00-17 = 2000-2017
+      const fullYear = year >= 18 ? 2000 + year : 2000 + year;
+      return new Date(fullYear, month - 1, 1);
     }
     
     // Extract year from title as fallback
