@@ -131,6 +131,21 @@ export default function NewsPage() {
     window.open(article.source_url, '_blank');
   };
 
+  const handleRefreshNews = async () => {
+    setRefreshing(true);
+    try {
+      const response = await axios.post(`${API}/news/refresh`);
+      toast.success(`✅ ${response.data.message}`);
+      // Reload news after refresh
+      await fetchNews();
+    } catch (error) {
+      console.error('Failed to refresh news', error);
+      toast.error('Failed to refresh news feed');
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   const saveArticle = async (articleId) => {
     if (!token) {
       toast.error('Please login to save articles');
