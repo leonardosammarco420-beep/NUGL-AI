@@ -81,6 +81,54 @@ export default function AIHubPage() {
   const handleModelChange = (modelId) => {
     setSelectedModel(modelId);
     setSearchParams({ model: modelId });
+    setMessages([]);
+  };
+
+  const trackAffiliateClick = async (model) => {
+    if (model.affiliateId) {
+      try {
+        await axios.post(`${API}/affiliate/track-click`, {
+          partner_id: model.affiliateId,
+          partner_name: model.name,
+          source_page: 'ai-hub',
+          ai_model: model.id
+        });
+        console.log('Affiliate click tracked:', model.name);
+      } catch (error) {
+        console.error('Failed to track click', error);
+      }
+    }
+  };
+
+  const handleExternalOpen = (model) => {
+    trackAffiliateClick(model);
+    window.open(model.url, '_blank');
+  };
+
+  const handleSendMessage = async () => {
+    if (!prompt.trim() || loading) return;
+
+    const userMessage = { role: 'user', content: prompt };
+    setMessages(prev => [...prev, userMessage]);
+    setPrompt('');
+    setLoading(true);
+
+    try {
+      const response = await axios.post(`${API}/chat`, {
+        message: prompt,
+        history: messages
+      });
+
+      const botMessage = { role: 'assistant', content: response.data.response };
+      setMessages(prev => [...prev, botMessage]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      toast.error('Failed to get response');
+      const errorMessage = { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
