@@ -105,25 +105,29 @@ export default function AIHubPage() {
     window.open(model.url, '_blank');
   };
 
+  const [sessionId, setSessionId] = useState(null);
+
   const handleSendMessage = async () => {
     if (!prompt.trim() || loading) return;
 
     const userMessage = { role: 'user', content: prompt };
     setMessages(prev => [...prev, userMessage]);
+    const currentPrompt = prompt;
     setPrompt('');
     setLoading(true);
 
     try {
       const response = await axios.post(`${API}/chat`, {
-        message: prompt,
-        history: messages
+        message: currentPrompt,
+        session_id: sessionId
       });
 
+      setSessionId(response.data.session_id);
       const botMessage = { role: 'assistant', content: response.data.response };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
       console.error('Chat error:', error);
-      toast.error('Failed to get response');
+      toast.error('Failed to get response. Check console for details.');
       const errorMessage = { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
