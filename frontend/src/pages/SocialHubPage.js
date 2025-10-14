@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import { Button } from '../components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs';
@@ -6,6 +6,21 @@ import { Instagram, Twitter, Facebook, Youtube, TrendingUp, Users, Heart, Messag
 
 export default function SocialHubPage() {
   const [selectedPlatform, setSelectedPlatform] = useState('all');
+
+  useEffect(() => {
+    // Load Twitter widget script
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+  }, []);
 
   const socialAccounts = [
     {
