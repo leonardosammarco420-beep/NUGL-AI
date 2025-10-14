@@ -299,6 +299,13 @@ async def get_me(user_id: str = Depends(get_current_user)):
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
+@api_router.get("/users/wallet/{wallet_address}")
+async def get_user_by_wallet(wallet_address: str):
+    user = await db.users.find_one({"wallet_address": wallet_address}, {"_id": 0, "password_hash": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
 # News Routes
 @api_router.get("/news", response_model=List[NewsArticle])
 async def get_news(category: Optional[str] = None, limit: int = 50):
