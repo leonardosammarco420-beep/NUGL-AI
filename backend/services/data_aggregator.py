@@ -35,9 +35,11 @@ class NewsAggregator:
             'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
         ],
         'jamaica': [
-            'https://www.loopjamaica.com/rss',
             'https://jamaica-gleaner.com/feed',
             'https://rjrnewsonline.com/feed/',
+            'https://iriefm.net/feed/',
+            'https://www.jamaicaobserver.com/feed/',
+            'http://www.jamaicatoday.org/feed/',
         ]
     }
     
