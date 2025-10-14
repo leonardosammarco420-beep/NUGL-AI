@@ -6,9 +6,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from './ui/dropdown-menu';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { Menu, X, LogOut, User, Wallet, Crown, Gift, Building2 } from 'lucide-react';
+import { Menu, X, LogOut, User, Wallet, Crown, Gift, Building2, ChevronDown, Leaf, Bot, Sprout } from 'lucide-react';
 
 export default function Navigation() {
   const { user, token, login, logout, API } = useContext(AuthContext);
