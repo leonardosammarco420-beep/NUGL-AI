@@ -34,17 +34,32 @@ export default function PressRoomPage() {
 
   // Extract date from URL or use title
   const extractDateFromArticle = (release) => {
-    const urlDateMatch = release.link.match(/\/(\d{4})\/(\d{2})\/(\d{2})\//);
+    // Try format: /2021/11/26/
+    let urlDateMatch = release.link.match(/\/(\d{4})\/(\d{2})\/(\d{2})\//);
     if (urlDateMatch) {
       return new Date(urlDateMatch[1], urlDateMatch[2] - 1, urlDateMatch[3]);
     }
     
-    const titleDateMatch = release.title.match(/(\d{4})/);
+    // Try format: /20211126/
+    urlDateMatch = release.link.match(/\/(\d{4})(\d{2})(\d{2})\//);
+    if (urlDateMatch) {
+      return new Date(urlDateMatch[1], urlDateMatch[2] - 1, urlDateMatch[3]);
+    }
+    
+    // Try format: /2023/02/28/ (GlobeNewswire)
+    urlDateMatch = release.link.match(/\/(\d{4})\/(\d{2})\/(\d{2})\//);
+    if (urlDateMatch) {
+      return new Date(urlDateMatch[1], urlDateMatch[2] - 1, urlDateMatch[3]);
+    }
+    
+    // Extract year from title as fallback
+    const titleDateMatch = release.title.match(/\b(20\d{2})\b/);
     if (titleDateMatch) {
       return new Date(titleDateMatch[1], 0, 1);
     }
     
-    return new Date(release.published_at);
+    // Default to 2018 for old articles without dates
+    return new Date(2018, 0, 1);
   };
 
   const formatDate = (dateString) => {
