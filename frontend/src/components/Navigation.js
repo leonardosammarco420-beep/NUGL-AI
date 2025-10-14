@@ -52,6 +52,35 @@ export default function Navigation() {
     }
   };
 
+  const connectWallet = async () => {
+    try {
+      if (typeof window.ethereum === 'undefined') {
+        toast.error('Please install MetaMask to connect your wallet');
+        return;
+      }
+
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const address = accounts[0];
+      
+      setWalletAddress(address);
+      setWalletConnected(true);
+      
+      // Fetch user credits from backend
+      try {
+        const response = await axios.get(`${API}/users/wallet/${address}`);
+        setUserCredits(response.data.credits || 0);
+      } catch (err) {
+        // If user doesn't exist, they have 0 credits
+        setUserCredits(0);
+      }
+      
+      toast.success(`Wallet connected: ${address.slice(0, 6)}...${address.slice(-4)}`);
+    } catch (error) {
+      toast.error('Failed to connect wallet');
+      console.error(error);
+    }
+  };
+
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/news', label: 'News' },
