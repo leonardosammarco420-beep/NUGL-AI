@@ -469,6 +469,66 @@ async def get_wallet_user(wallet_address: str):
     
     return user
 
+@api_router.get("/affiliate/dashboard")
+async def get_affiliate_dashboard():
+    """Get affiliate dashboard stats"""
+    # Get all clicks
+    clicks = await db.affiliate_clicks.find({}, {"_id": 0}).to_list(1000)
+    
+    # Calculate metrics
+    total_clicks = len(clicks)
+    total_conversions = sum(1 for c in clicks if c.get('converted'))
+    total_revenue = sum(c.get('revenue', 0) for c in clicks if c.get('converted'))
+    conversion_rate = (total_conversions / total_clicks * 100) if total_clicks > 0 else 0
+    
+    # Partner performance
+    partner_stats = {}
+    for click in clicks:
+        pid = click.get('partner_id')
+        if pid not in partner_stats:
+            partner_stats[pid] = {
+                'partner_id': pid,
+                'partner_name': click.get('partner_name'),
+                'clicks': 0,
+                'conversions': 0,
+                'revenue': 0
+            }
+        partner_stats[pid]['clicks'] += 1
+        if click.get('converted'):
+            partner_stats[pid]['conversions'] += 1
+            partner_stats[pid]['revenue'] += click.get('revenue', 0)
+    
+    # Recent clicks (last 10)
+    recent_clicks = sorted(clicks, key=lambda x: x.get('clicked_at', ''), reverse=True)[:10]
+    
+    return {
+        'summary': {
+            'total_clicks': total_clicks,
+            'total_conversions': total_conversions,
+            'total_revenue': round(total_revenue, 2),
+            'conversion_rate': round(conversion_rate, 1),
+            'avg_commission': round(total_revenue / total_conversions, 2) if total_conversions > 0 else 0
+        },
+        'partners': sorted(partner_stats.values(), key=lambda x: x['revenue'], reverse=True),
+        'recent_activity': recent_clicks
+    }
+
+@api_router.post("/affiliate/track-click")
+async def track_affiliate_click(click_data: dict):
+    """Track an affiliate link click"""
+    click = {
+        'id': str(uuid.uuid4()),
+        'partner_id': click_data.get('partner_id'),
+        'partner_name': click_data.get('partner_name'),
+        'source_page': click_data.get('source_page'),
+        'clicked_at': datetime.now(timezone.utc).isoformat(),
+        'converted': False,
+        'revenue': 0
+    }
+    
+    await db.affiliate_clicks.insert_one(click)
+    return {'success': True, 'click_id': click['id']}
+
 # AI Chatbot Route
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat(message: ChatMessage):
