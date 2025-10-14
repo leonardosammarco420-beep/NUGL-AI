@@ -374,11 +374,10 @@ export default function NewsPage() {
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Clock className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-500 text-xs">
-                          {new Date(article.published_at).toLocaleTimeString()}
-                        </span>
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <span className="text-teal-400 text-xs font-semibold">{getSourceName(article.source_url)}</span>
+                        <span className="text-gray-600">•</span>
+                        <span className="text-gray-500 text-xs">{formatTimestamp(article.published_at)}</span>
                         <span className={`px-2 py-0.5 rounded text-xs font-medium ${getCategoryColor(article.category)}`}>
                           {article.category}
                         </span>
