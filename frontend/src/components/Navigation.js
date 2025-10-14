@@ -240,13 +240,30 @@ export default function Navigation() {
                     <LogOut className="w-4 h-4" />
                   </Button>
                 </>
+              ) : walletConnected ? (
+                <div className="flex items-center gap-3">
+                  <div className="px-3 py-2 rounded-lg bg-slate-800/50 border border-teal-500/30 text-sm">
+                    <span className="text-gray-400">Balance: </span>
+                    <span className="text-teal-400 font-semibold">{userCredits} credits</span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-teal-500/30 text-teal-400 hover:bg-teal-500/10"
+                    data-testid="wallet-address-button"
+                  >
+                    <Wallet className="w-4 h-4 mr-2" />
+                    {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+                  </Button>
+                </div>
               ) : (
                 <Button
-                  onClick={() => setShowAuth(true)}
-                  data-testid="login-button"
+                  onClick={connectWallet}
+                  data-testid="connect-wallet-button"
                   className="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white"
                 >
-                  Sign In
+                  <Wallet className="w-4 h-4 mr-2" />
+                  Connect Wallet
                 </Button>
               )}
             </div>
