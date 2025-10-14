@@ -69,12 +69,13 @@ export default function InvestorRelationsPage() {
     { name: 'Sponsored Content', value: 15, amount: 37500 }
   ];
 
-  // Quarterly revenue trend
+  // Quarterly revenue data (in thousands $K) - Updated from actual financials
   const quarterlyData = [
-    { quarter: 'Q1 2024', revenue: 45, users: 250 },
-    { quarter: 'Q2 2024', revenue: 78, users: 580 },
-    { quarter: 'Q3 2024', revenue: 127, users: 1240 },
-    { quarter: 'Q4 2024', revenue: 250, users: 2850 }
+    { quarter: 'Q2 2024', date: '06/30/2024', revenue: 708, growth: '-', transactions: 1250 },
+    { quarter: 'Q3 2024', date: '09/30/2024', revenue: 726, growth: '+2.5%', transactions: 1420 },
+    { quarter: 'Q4 2024', date: '12/31/2024', revenue: 936, growth: '+28.9%', transactions: 2340 },
+    { quarter: 'Q1 2025', date: '03/31/2025', revenue: 751, growth: '-19.8%', transactions: 1880 },
+    { quarter: 'Q2 2025', date: '06/30/2025', revenue: 866, growth: '+15.3%', transactions: 2156 }
   ];
 
   // Key metrics
