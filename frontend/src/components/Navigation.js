@@ -106,6 +106,15 @@ export default function Navigation() {
     { to: '/media/events', label: 'Events', icon: Calendar },
   ];
 
+  const aiLinks = [
+    { to: '/ai-hub?model=gpt', label: 'ChatGPT', icon: MessageSquare },
+    { to: '/ai-hub?model=claude', label: 'Claude', icon: Brain },
+    { to: '/ai-hub?model=perplexity', label: 'Perplexity', icon: Sparkles },
+    { to: '/ai-hub?model=deepseek', label: 'DeepSeek', icon: Zap },
+    { to: '/chat', label: 'Cannabis Expert', icon: Leaf },
+    { to: '/ai-hub?model=huggingface', label: 'HuggingFace Spaces', icon: Bot },
+  ];
+
   return (
     <>
       <nav className="sticky top-0 z-50 backdrop-blur-xl bg-slate-900/80 border-b border-teal-500/20">
