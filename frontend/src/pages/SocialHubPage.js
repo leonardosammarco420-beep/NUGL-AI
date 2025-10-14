@@ -64,6 +64,16 @@ export default function SocialHubPage() {
       stats: { followers: '12.5K', engagement: '4.2%' }
     },
     {
+      platform: 'instagram',
+      name: 'The Gap JA',
+      handle: '@thegapja',
+      url: 'https://www.instagram.com/thegapja/',
+      embedUrl: 'https://www.instagram.com/thegapja/embed',
+      icon: Instagram,
+      color: 'from-purple-500 to-pink-500',
+      stats: { followers: '5.4K', engagement: '4.8%' }
+    },
+    {
       platform: 'twitter',
       name: 'NUGL Media',
       handle: '@nuglmedia',
