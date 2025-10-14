@@ -32,36 +32,6 @@ export default function PressRoomPage() {
     }
   };
 
-  const handleUpload = async (e) => {
-    e.preventDefault();
-    if (!newRelease.title || !newRelease.link) {
-      toast.error('Please fill in title and link');
-      return;
-    }
-
-    try {
-      await axios.post(`${API}/press-releases`, newRelease);
-      toast.success('Press release added successfully!');
-      setNewRelease({ title: '', media_source: '', link: '' });
-      setShowUploadForm(false);
-      fetchPressReleases();
-    } catch (error) {
-      console.error('Failed to upload press release', error);
-      toast.error('Failed to add press release');
-    }
-  };
-
-  const filteredReleases = pressReleases
-    .filter(release =>
-      release.title.toLowerCase().includes(search.toLowerCase()) ||
-      release.media_source.toLowerCase().includes(search.toLowerCase())
-    )
-    .map(release => ({
-      ...release,
-      extractedDate: extractDateFromArticle(release)
-    }))
-    .sort((a, b) => b.extractedDate - a.extractedDate);
-
   // Extract date from URL or use title
   const extractDateFromArticle = (release) => {
     const urlDateMatch = release.link.match(/\/(\d{4})\/(\d{2})\/(\d{2})\//);
