@@ -83,7 +83,7 @@ export default function InvestorRelationsPage() {
     { label: 'Platform Users', value: platformStats?.total_users || 0, change: '+234%', icon: <Users className="w-6 h-6" /> },
     { label: 'Monthly Active Users', value: '1,234', change: '+156%', icon: <TrendingUp className="w-6 h-6" /> },
     { label: 'Content Articles', value: platformStats?.total_articles || 0, change: '+89%', icon: <FileText className="w-6 h-6" /> },
-    { label: 'Transactions', value: platformStats?.total_transactions || 0, change: '+312%', icon: <DollarSign className="w-6 h-6" /> }
+    { label: 'Q2 2025 Revenue', value: '$866K', change: '+15.3%', icon: <DollarSign className="w-6 h-6" /> }
   ];
 
   // Management team
