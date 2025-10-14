@@ -327,7 +327,7 @@ export default function InvestorRelationsPage() {
                       <td className="pt-4 text-gray-400 font-semibold" colSpan="2">Trailing 12 Months (TTM)</td>
                       <td className="pt-4 text-right">
                         <span className="text-teal-400 font-bold text-xl">
-                          ${quarterlyData.slice(-4).reduce((sum, q) => sum + q.revenue, 0)}K
+                          ${ttmRevenue}K
                         </span>
                       </td>
                       <td className="pt-4 text-right text-green-400 font-semibold">+34.2%</td>
